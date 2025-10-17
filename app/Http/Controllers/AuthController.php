@@ -1,0 +1,87 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
+use App\Models\SuperUser;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use App\Models\User;
+
+class AuthController extends Controller
+{
+    public function showRegisterForm()
+{
+    return view('home.register'); // pastikan ini sesuai folder
+}
+
+    public function register(Request $request)
+    {
+        try {
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'phone' => 'required',
+        'password' => 'required|min:6',
+        'profile_photo' => 'nullable|image|mimes:png,jpg,jpeg'
+    ]);
+
+    $profilePath = null;
+    if ($request->hasFile('profile_photo')) {
+        $profilePath = $request->file('profile_photo')->store('profiles', 'public');
+    }
+
+    User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'phone' => $request->phone,
+        'password' => bcrypt($request->password),
+        'profile_photo' => $profilePath
+    ]);
+
+        return redirect()->route('register')->with('success', 'Registration successful! Please login.');
+    } catch (\Exception $e) { // ⬅️ Penting! Harus ada \Exception $e
+        return redirect()->route('register')->with('error', 'Registration failed, please try again.');
+    }
+}
+
+
+
+public function showLoginForm()
+{
+    return view('home.login');
+}
+
+public function loginProcess(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
+
+    if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        // Update token otomatis
+        $request->session()->regenerate(); // Laravel akan generate SESSION_ID baru biar aman
+
+        return redirect()->route('landing')->with('success', 'Login successful!');
+    }
+
+    return back()->with('error', 'Incorrect email or password!');
+}
+
+
+    public function logout(Request $request)
+{
+    Auth::logout(); // Hapus autentikasi user dari sistem
+
+    // Hapus session sepenuhnya
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    // Redirect ke landing page
+    return redirect('/')->with('success', 'You have been logged out!');
+}
+}
