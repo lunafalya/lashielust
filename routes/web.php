@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\BookingController;
 
 Route::get('/', function () {
     return view('home.landing');
@@ -42,9 +43,11 @@ Route::get('/detail', function () {
     return view('home.detail');
 });
 
-Route::get('/booking', function () {
-    return view('home.booking');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/bookings/{id}', [BookingController::class, 'create'])->name('bookings.create');
 });
+
+Route::post('/bookings/store', [BookingController::class, 'store'])->name('bookings.store');
 
 Route::middleware('auth')->group(function () {
     // Tampilkan profil (view: resources/views/home/profile.blade)

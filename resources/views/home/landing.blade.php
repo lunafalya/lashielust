@@ -69,7 +69,7 @@
         <div class="card">
           <a href="{{ url('/services') }}">
             <img src="{{ asset('images/lashie.jpeg') }}" alt="Body">
-            <p>Lash</p>
+            <p>Eyes</p>
           </a>
           
         </div>
@@ -83,7 +83,7 @@
         <div class="card">
           <a href="{{ url('/services') }}">
             <img src="{{ asset('images/spa.jpeg') }}" alt="Massage">
-          <p>Massage</p>
+          <p>Body</p>
           </a>
           
         </div>

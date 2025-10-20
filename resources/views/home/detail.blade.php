@@ -15,19 +15,15 @@
 
 @section('content')
   <section class="detail-section">
-    <div class="detail-container">
-
-
-    <div class="detail-image-area">
-    <img src="{{ asset('storage/' . $service->file_path) }}" alt="{{ $service->name }}" class="main-product-image">
-</div>
-
+        <div class="detail-container">
+        <div class="detail-image-area">
+            <img src="{{ asset('storage/' . $service->file_path) }}" alt="{{ $service->name }}" class="main-product-image">
+        </div>
             <div class="detail-content">
-                <p class="service-brand">Lashie Lust</p>
+                <p class="service-brand">Lashie Lust - {{ $service->category }}</p>
                 <h1 class="service-title">{{ $service->name }}</h1>
                 <p class="service-price">Start From Rp {{ number_format($service->price, 0, ',', '.') }}</p>
-
-                <button class="book-now-btn" id="bookNowButton">Book Now</button>
+                <a href="{{ route('bookings.create', $service->id) }}" class="book-now-btn">Book Now</a>
 
                 <div class="tab-navigation">
                     <span class="tab-item active" data-tab="description">Description</span>
@@ -37,7 +33,7 @@
                 <div class="tab-content active" id="description-content">
                     <p class="content-text">{{ $service->description }}</p>
                 </div>
-            </div>
+            
 
             <div class="tab-content" id="review-content">
                 <div class="review-item">
@@ -55,10 +51,7 @@
                         massa dui. Tortor est purus morbi vitae arcu suspendisse amet."
                     </p>
                 </div>
-                </div>
-
-                
-            
+            </div>
         </div>
     </div>
   </section>

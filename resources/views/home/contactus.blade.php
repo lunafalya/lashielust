@@ -1,3 +1,7 @@
+@php
+    $user = Auth::user();
+@endphp
+
 @extends('layouts.app')
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +27,6 @@
     <div class="contact-container">
         <div class="contact-image-area">
             <div class="image-shadow-bg"></div>
-            {{-- Sesuaikan path gambar Anda --}}
             <img src="{{ asset('images/serviceshair.png') }}" alt="Model with beautiful hair" class="contact-main-image">
         </div>
 
@@ -42,24 +45,27 @@
         <form action="#" method="POST" class="contact-form">
             <div class="input-group">
                 <img src="{{ asset('images/user.png') }}" alt="user">
-                <input type="text" name="name" placeholder="Name" required>
+                <input type="text" id="name" name="name" 
+                    value="{{ $user ? $user->name : 'Your Name' }}" readonly>
             </div>
 
             <div class="input-group">
                 <img src="{{ asset('images/mail.png') }}" alt="mail">
-                <input type="email" name="email" placeholder="Email" required>
+                <input type="email" id="email" name="email" 
+                    value="{{ $user ? $user->email : 'email@gmail.com' }}" readonly>
             </div>
 
             <div class="input-group">
                 <img src="{{ asset('images/phone.png') }}" alt="phone">
-                <input type="tel" name="phone" placeholder="Phone">
+                <input type="text" id="phone" name="phone" 
+                    value="{{ $user ? $user->phone : '+62 878 888 888' }}" readonly>
             </div>
 
             <div class="input-group textarea-group">
                 <img src="{{ asset('images/edit.png') }}" alt="edit">
                 <textarea name="message" placeholder="Any Note For Us" rows="1" required></textarea>
             </div>
-
+            
             <button type="submit" class="submit-btn">SUBMIT</button>
         </form>
     </div>

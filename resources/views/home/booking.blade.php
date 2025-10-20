@@ -23,56 +23,42 @@
             <h2 class="form-title">Lashie Lust Appointment Form</h2>
             <p class="form-subtitle">Please fill the form below, it will only take 3 minutes</p>
 
-            <form class="appointment-form">
                 
-                <div class="input-row">
-                    <input type="text" id="name" name="name" 
-                        value="{{ $user ? $user->name : 'Your Name' }}" readonly>
-                    <input type="email" id="email" name="email" 
-                        value="{{ $user ? $user->email : 'email@gmail.com' }}" readonly>
-                </div>
+                <form action="{{ route('bookings.store') }}" method="POST" class="appointment-form">
+                    @csrf
 
-                <div class="input-row">
-                    <input type="text" id="phone" name="phone" 
-                        value="{{ $user ? $user->phone : '+62 878 888 888' }}" readonly>
-                    <div class="select-wrapper">
-                        <select>
-                            <option value="" disabled selected>Select Type</option>
-                            <option value="eyelash">Eyelash Extension</option>
-                            <option value="hair">Hair Treatment</option>
-                            <option value="nail">Nail Art</option>
-                            <option value="nail">Piercing</option>
-                            <option value="nail">Body Massage</option>
-                        </select>
-                        <i class="fa-solid fa-chevron-down select-icon"></i>
+                    <!-- Hidden -->
+                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+                    <input type="hidden" name="service_id" value="{{ $service->id }}">
+
+                    <div class="input-row">
+                        <input type="text" name="name" value="{{ $user->name }}" readonly>
+                        <input type="email" name="email" value="{{ $user->email }}" readonly>
                     </div>
-                </div>
 
-                <div class="input-row">
-    <div class="input-date-wrapper">
-         <input type="date"> 
-</div>
-    
-    <div class="select-wrapper">
-        <select>
-            <option value="" disabled selected>Choose Your Time</option>
-            <option value="8">08.00-10.00</option>
-            <option value="10">10.00-12.00</option>
-            <option value="12">12.00-14.00</option>
-            <option value="14">14.00-16.00</option>
-            <option value="16">16.00-18.00</option>
-            </select>
-        <i class="fa-solid fa-chevron-down select-icon"></i>
-    </div>
-</div>
+                    <div class="input-row">
+                        <input type="text" name="phone" value="{{ $user->phone }}" readonly>
+                        <input type="text" name="category" value="{{ $service->category }}" readonly>
+                    </div>
 
-                <textarea placeholder="Any Notes For Us"></textarea>
+                    <div class="input-row">
+                        <input type="date" name="booking_date" required>
+                        <select name="booking_time" required>
+                            <option disabled selected>Choose Your Time</option>
+                            <option value="08.00-10.00">08.00-10.00</option>
+                            <option value="10.00-12.00">10.00-12.00</option>
+                            <option value="12.00-14.00">12.00-14.00</option>
+                            <option value="14.00-16.00">14.00-16.00</option>
+                            <option value="16.00-18.00">16.00-18.00</option>
+                        </select>
+                    </div>
 
-                <button type="submit" class="book-now-btn">Book Now</button>
-            </form>
+                    <textarea name="notes" placeholder="Any Notes For Us"></textarea>
+                    <button type="submit" class="book-now-btn">Book Now</button>
+                </form>
+
         </div>
     </section>
-
 @endsection
 
 

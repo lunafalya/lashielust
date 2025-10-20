@@ -12,17 +12,11 @@
 <body>
 
 @section('content')
-
-    <!-- OUR SERVICE -->
       <section class="home1">
       <div class="home-content1">
       <img src="{{ asset('images/ourservice1.png') }}" alt="ourservice">
     </div>
   </section>
-
-  
-  
-
 <section class="service-filter-section">
     <div class="service-filter-container">
         <ul class="service-filter">
@@ -30,6 +24,8 @@
             <li data-filter="nail">Nails</li>
             <li data-filter="lash">Eyes</li> 
             <li data-filter="hair">Hair</li>
+            <li data-filter="hair">Body</li>
+            <li data-filter="hair">Piercing</li>
         </ul>
     </div>
 </section>

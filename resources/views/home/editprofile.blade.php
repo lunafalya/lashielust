@@ -20,14 +20,14 @@
         @endphp
 
         <div class="profile-avatar">
-            @if($user && $user->profile_photo)
+            <!-- @if($user && $user->profile_photo)
                 <img src="{{ asset('public/profiles' . $user->profile_photo) }}" width="80" height="80" style="border-radius: 50%; object-fit: cover;">
             @else
-                <!-- Default icon jika belum ada foto -->
+
                 <svg viewBox="0 0 24 24" fill="currentColor" width="80" height="80">
                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                 </svg>
-            @endif
+            @endif -->
 
             @if(session('success'))
                 <div class="alert alert-success">
@@ -35,10 +35,10 @@
                 </div>
             @endif
         </div>
-          <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
+          <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="profile-form">
               @csrf
               @method('PUT')
-                <div>
+                <div class="profile-avatar">
                     @if($user && $user->profile_photo)
                         <img src="{{ asset('storage/' . $user->profile_photo) }}" width="80" height="80" style="border-radius:50%;object-fit:cover;">
                     @else

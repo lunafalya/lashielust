@@ -49,13 +49,6 @@
                 <td><span class="status cancelled">Cancelled</span></td>
                 <td><span class="review-status added">Review Added</span></td>
             </tr>
-            <tr>
-                <td>456789356</td>
-                <td>Sep 8, 2024, 03:13pm</td>
-                <td>Nail Art</td>
-                <td><span class="status completed">Completed</span></td>
-                <td><span class="review-status added">Review Added</span></td>
-            </tr>
         </tbody>
     </table>
 </div>
