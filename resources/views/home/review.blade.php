@@ -20,27 +20,26 @@
         
         <h2 class="review-title">Add Review</h2>
 
-        <form class="review-form">
-            
+        <form class="review-form" action="{{ route('review.store') }}" method="POST">
+            @csrf
+            <input type="hidden" name="booking_id" value="{{ $booking->id }}">
+            <input type="hidden" name="service_id" value="{{ $booking->service->id }}">
+            <input type="hidden" name="rating_value" id="ratingValue" value="4">
+
             <div class="form-group-review">
                 <label class="review-label">Rating</label>
-                <div class="rating-stars">
-                    <span class="star active">&#9733;</span> 
-                    <span class="star active">&#9733;</span>
-                    <span class="star active">&#9733;</span>
-                    <span class="star active">&#9733;</span>
-                    <span class="star">&#9733;</span>
+                <div class="rating-stars" id="starRating">
+                    @for($i = 1; $i <= 5; $i++)
+                        <span class="star" data-value="{{ $i }}">&#9733;</span>
+                    @endfor
                 </div>
-                <input type="hidden" name="rating_value" id="ratingValue" value="4"> 
             </div>
 
             <div class="form-group-review">
-                <label class="review-label" for="service_name">Services</label>
+                <label class="review-label">Service</label>
                 <input 
                     type="text" 
-                    id="service_name" 
-                    name="service_name" 
-                    value="(ini gbs diedit2 ya ngambil id servicenya)" 
+                    value="{{ $booking->service->name }}" 
                     readonly
                     class="service-input"
                 >
@@ -52,7 +51,8 @@
                     id="review_text" 
                     name="review_text" 
                     rows="6" 
-                    placeholder="Zzz"
+                    placeholder="Write something..."
+                    required
                 ></textarea>
             </div>
 
@@ -63,6 +63,31 @@
 </section>
 
 @endsection
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const stars = document.querySelectorAll(".rating-stars .star");
+    const ratingInput = document.getElementById("ratingValue");
+
+    stars.forEach((star, index) => {
+        star.addEventListener("click", function () {
+            // Set rating berdasarkan index (index mulai dari 0 → jadi +1)
+            const rating = index + 1;
+            ratingInput.value = rating; // update input hidden
+
+            // Update tampilan bintang
+            stars.forEach((s, i) => {
+                if (i < rating) {
+                    s.classList.add("active");
+                } else {
+                    s.classList.remove("active");
+                }
+            });
+        });
+    });
+});
+</script>
+
 
 </body>
 </html>

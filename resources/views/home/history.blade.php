@@ -34,21 +34,26 @@
                 <th>Review</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>456789356</td>
-                <td>Sep 9, 2024, 04:30pm</td>
-                <td>Lash Lift</td>
-                <td><span class="status pending">Pending</span></td>
-                <td><button class="review-btn add">Add Review</button></td>
-            </tr>
-            <tr>
-                <td>456789356</td>
-                <td>Sep 8, 2024, 03:13pm</td>
-                <td>Nail Art</td>
-                <td><span class="status cancelled">Cancelled</span></td>
-                <td><span class="review-status added">Review Added</span></td>
-            </tr>
+                <tbody>
+            @foreach($bookings as $booking)
+                <tr>
+                    <td>{{ $booking->id }}</td>
+                    <td>{{ $booking->created_at->format('M d, Y, h:ia') }}</td>
+                    <td>{{ $booking->service->name }}</td>
+                    <td>
+                        <span class="status {{ strtolower($booking->status) }}">
+                            {{ ucfirst($booking->status) }}
+                        </span>
+                    </td>
+                    <td>
+                        @if($booking->status == 'approved')
+                            <a href="{{ url('/review/'.$booking->id) }}" class="review-btn add">Add Review</a>
+                        @else
+                            <span class="review-status">-</span>
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 </div>

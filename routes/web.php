@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\ReviewController;
 
 Route::get('/', function () {
     return view('home.landing');
@@ -60,13 +61,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
+Route::get('/profile/orders', [BookingController::class, 'history'])->name('orders.history');
 
-Route::get('/history', function () {
-    return view('home.history');
-});
 
-Route::get('/review', function () {
-    return view('home.review');
-});
+Route::get('/review/{booking}', [ReviewController::class, 'create'])->name('review.create');
+Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
+
+
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

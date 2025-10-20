@@ -38,4 +38,15 @@ public function store(Request $request)
 
     return redirect()->route('services.index')->with('success', 'Booking successful! We will contact you shortly.');
 }
+
+    public function history()
+    {
+        $user = auth()->user();
+        $bookings = \App\Models\Booking::with('service')
+            ->where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('home.history', compact('bookings'));
+    }
 }

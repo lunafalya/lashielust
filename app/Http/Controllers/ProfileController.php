@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
-    // Menampilkan halaman profil (view: home.profile)
     public function show()
     {
         $user = Auth::user();

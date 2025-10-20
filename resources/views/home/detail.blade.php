@@ -18,6 +18,7 @@
         <div class="detail-container">
         <div class="detail-image-area">
             <img src="{{ asset('storage/' . $service->file_path) }}" alt="{{ $service->name }}" class="main-product-image">
+
         </div>
             <div class="detail-content">
                 <p class="service-brand">Lashie Lust - {{ $service->category }}</p>
@@ -35,22 +36,20 @@
                 </div>
             
 
-            <div class="tab-content" id="review-content">
-                <div class="review-item">
-                    <p class="reviewer-name">Elena</p>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
+                <div class="tab-content" id="review-content">
+                    @foreach($service->reviews as $review)
+                        <div class="review-item">
+                            <p class="reviewer-name">{{ $review->user->name }}</p>
+                            
+                            <div class="rating">
+                                @for($i = 1; $i <= 5; $i++)
+                                    <i class="fa-solid fa-star {{ $i <= $review->rating ? '' : 'inactive' }}"></i>
+                                @endfor
+                            </div>
+                            <p class="review-text">"{{ $review->review_text }}"</p>
+                        </div>
+                        @endforeach
                     </div>
-                    <p class="review-text">
-                        "Eleifend arcu non lorem justo in tempus purus gravida. Est tortor 
-                        egestas sed feugiat elementum. Viverra nulla amet a ultrices 
-                        massa dui. Tortor est purus morbi vitae arcu suspendisse amet."
-                    </p>
-                </div>
             </div>
         </div>
     </div>
@@ -93,6 +92,30 @@
         }
     }
   </script>
+
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const stars = document.querySelectorAll(".rating-stars .star");
+    const ratingInput = document.getElementById("ratingValue");
+
+    stars.forEach((star, index) => {
+        star.addEventListener("click", function () {
+            // Set rating berdasarkan index (index mulai dari 0 → jadi +1)
+            const rating = index + 1;
+            ratingInput.value = rating; // update input hidden
+
+            // Update tampilan bintang
+            stars.forEach((s, i) => {
+                if (i < rating) {
+                    s.classList.add("active");
+                } else {
+                    s.classList.remove("active");
+                }
+            });
+        });
+    });
+});
+</script>
 
 </body>
 </html>

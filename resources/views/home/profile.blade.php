@@ -23,7 +23,7 @@
             
             <div class="profile-tabs">
                 <a href="#" class="tab-item active">Profile</a>
-                <a href="{{ url('/history') }}" class="tab-item inactive">Orders</a>
+                <a href="{{ route('orders.history') }}" class="tab-item">Orders</a>
             </div>
 
                 <div class="profile-avatar">
