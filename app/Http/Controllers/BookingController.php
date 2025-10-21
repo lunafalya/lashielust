@@ -42,7 +42,8 @@ public function store(Request $request)
     public function history()
     {
         $user = auth()->user();
-        $bookings = \App\Models\Booking::with('service')
+
+        $bookings = Booking::with(['service', 'review']) // include service & review
             ->where('user_id', $user->id)
             ->orderBy('created_at', 'desc')
             ->get();

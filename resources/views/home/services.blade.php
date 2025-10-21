@@ -19,14 +19,14 @@
   </section>
 <section class="service-filter-section">
     <div class="service-filter-container">
-        <ul class="service-filter">
-            <li class="active" data-filter="all">All</li>
-            <li data-filter="nail">Nails</li>
-            <li data-filter="lash">Eyes</li> 
-            <li data-filter="hair">Hair</li>
-            <li data-filter="hair">Body</li>
-            <li data-filter="hair">Piercing</li>
-        </ul>
+      <ul class="service-filter">
+          <li class="active" data-filter="all">All</li>
+          <li data-filter="nails">Nails</li>
+          <li data-filter="eyes">Eyes</li>
+          <li data-filter="hair">Hair</li>
+          <li data-filter="body">Body</li>
+          <li data-filter="piercing">Piercing</li>
+      </ul>
     </div>
 </section>
 
@@ -73,6 +73,35 @@
       dropdownMenu.classList.remove('show');
     }
   });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const filterItems = document.querySelectorAll('.service-filter li');
+    const serviceItems = document.querySelectorAll('.service-item');
+
+    filterItems.forEach(filter => {
+        filter.addEventListener('click', () => {
+            // ubah status aktif pada tombol filter
+            filterItems.forEach(f => f.classList.remove('active'));
+            filter.classList.add('active');
+
+            const filterValue = filter.getAttribute('data-filter');
+
+            serviceItems.forEach(item => {
+                const itemCategory = item.getAttribute('data-category').toLowerCase();
+
+                if (filterValue === 'all' || itemCategory === filterValue) {
+                    item.style.display = 'block';
+                    item.classList.add('show');
+                } else {
+                    item.style.display = 'none';
+                    item.classList.remove('show');
+                }
+            });
+        });
+    });
+});
 </script>
 
 <script>

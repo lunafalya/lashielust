@@ -12,7 +12,7 @@
     </ul>
   </nav>
   <div class="nav-icons">
-    <img src="{{ asset('images/searchlogo.png') }}" alt="searchlogo" class="search-icon">
+    <!-- <img src="{{ asset('images/searchlogo.png') }}" alt="searchlogo" class="search-icon"> -->
 
     <div class="dropdown">
       <img src="{{ asset('images/profilelogo.png') }}" alt="profilelogo" class="profile-icon" id="profileBtn" >

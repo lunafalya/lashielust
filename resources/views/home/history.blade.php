@@ -47,7 +47,11 @@
                     </td>
                     <td>
                         @if($booking->status == 'approved')
-                            <a href="{{ url('/review/'.$booking->id) }}" class="review-btn add">Add Review</a>
+                            @if($booking->review)
+                                <span class="review-status done">Review Added</span> {{-- Sudah review --}}
+                            @else
+                                <a href="{{ url('/review/'.$booking->id) }}" class="review-btn add">Add Review</a> {{-- Belum review --}}
+                            @endif
                         @else
                             <span class="review-status">-</span>
                         @endif
