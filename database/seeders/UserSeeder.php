@@ -2,23 +2,24 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class UserSeeder extends Seeder
 {
-
     public function run(): void
     {
-        User::create([
-            'username' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('password123'),
-            'nama' => 'Admin',
-            'no_telp' => '081234567890',
-            'alamat' => 'Example Address',
-            'role' => 'admin',
-        ]);
+        \App\Models\User::updateOrCreate(
+            ['email' => 'admin@gmail.com'], // cek berdasarkan email
+            [
+                'name' => 'Admin',
+                'phone' => '081234567890',
+                'password' => Hash::make('password123'),
+                'role' => 'admin',
+                'profile_photo' => null,
+            ]
+        );
     }
+
 }

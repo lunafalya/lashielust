@@ -2,6 +2,7 @@
 <header class="navbar">
   <div class="logo">
     <img src="{{ asset('images/logo.png') }}" alt="Lashie Lust Logo">
+      <link rel="icon" href="img/core-img/logo.png">
   </div>
   <nav>
     <ul>

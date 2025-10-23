@@ -57,16 +57,24 @@ public function showLoginForm()
 
 public function loginProcess(Request $request)
 {
-    $request->validate([
+ $request->validate([
         'email' => 'required|email',
         'password' => 'required'
     ]);
 
-    if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-        // Update token otomatis
-        $request->session()->regenerate(); // Laravel akan generate SESSION_ID baru biar aman
+    $credentials = $request->only('email', 'password');
 
-        return redirect()->route('landing')->with('success', 'Login successful!');
+    if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
+
+        $user = Auth::user();
+
+        // Cek role admin
+        if ($user->role === 'admin') {
+            return redirect()->route('dashboard')->with('success', 'Welcome Admin!');
+        } else {
+            return redirect()->route('landing')->with('success', 'Login successful!');
+        }
     }
 
     return back()->with('error', 'Incorrect email or password!');
@@ -84,4 +92,5 @@ public function loginProcess(Request $request)
     // Redirect ke landing page
     return redirect('/')->with('success', 'You have been logged out!');
 }
+
 }

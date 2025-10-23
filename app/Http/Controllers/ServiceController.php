@@ -21,7 +21,5 @@ class ServiceController extends Controller
     {
         $service = Service::findOrFail($id); // jika tidak ditemukan, 404
         return view('home.detail', compact('service'));
-    }
-
-    
+    }  
 }

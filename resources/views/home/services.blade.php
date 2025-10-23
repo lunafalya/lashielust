@@ -34,9 +34,9 @@
     @foreach($services as $service)
         <div class="service-item" data-category="{{ strtolower($service->category) }}">
             <a href="{{ route('services.show', $service->id) }}">
-                <img src="{{ asset('storage/' . $service->file_path) }}" alt="{{ $service->name }}">
+                <img src="{{ asset('storage/' . $service->file_path) }}" alt="{{ $service->name }}" class="card-img-top" style="max-height: 150px; width: 100%; object-fit: contain; border-radius: 0.3rem;">
                 <h3>{{ $service->name }}</h3>
-                <p>From Rp.{{ number_format($service->price, 0, ',', '.') }}</p>
+                <p>Rp.{{ number_format($service->price, 0, ',', '.') }}</p>
             </a>
         </div>
     @endforeach
