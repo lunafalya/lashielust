@@ -338,3 +338,24 @@ body {
         transform: translateY(-10px);
     }
 }
+
+
+
+
+.rating-stars .star {
+    font-size: 28px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.rating-stars .star.active {
+    color: gold;
+}
+
+.rating i {
+    font-size: 16px;
+    color: gold;
+}
+.rating i.inactive {
+    opacity: 0.3; /* atau bisa pakai color: #ccc; */
+}

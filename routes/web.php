@@ -9,6 +9,10 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AdminServiceController;
+use App\Http\Controllers\AdminBookingController;
+use App\Http\Controllers\AdminReviewController;
+use App\Http\Controllers\AdminNotificationController;
+
 
 // USERS
 Route::get('/', function () {
@@ -72,16 +76,16 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // ADMIN
 // Dashboard
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
-})->name('dashboard');
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+});
 
 // Notifications
-Route::get('/notificationsadmin', function () {
-    return view('admin.notifications');
-})->name('notifications');
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/notifications', [AdminNotificationController::class, 'index'])->name('admin.notifications');
+});
 
-
+// Service
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/services', [AdminServiceController::class, 'index'])->name('admin.services');
     Route::post('/services', [AdminServiceController::class, 'store'])->name('services.store');
@@ -89,16 +93,14 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::put('/services/{id}', [AdminServiceController::class, 'update'])->name('services.update');
 });
 
-
 // Booking
-Route::get('/bookingadmin', function () {
-    return view('admin.booking');
-})->name('bookingadmin');
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/bookings', [AdminBookingController::class, 'index'])->name('admin.bookings');
+});
 
-// Review
-Route::get('/reviewadmin', function () {
-    return view('admin.review');
-})->name('reviewadmin');
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/reviews', [AdminReviewController::class, 'index'])->name('admin.reviews');
+});
 
 Route::get('/profileadmin', function () {
     return view('admin.profile');

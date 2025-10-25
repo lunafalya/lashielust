@@ -43,7 +43,7 @@ class AuthController extends Controller
     ]);
 
         return redirect()->route('register')->with('success', 'Registration successful! Please login.');
-    } catch (\Exception $e) { // ⬅️ Penting! Harus ada \Exception $e
+    } catch (\Exception $e) { 
         return redirect()->route('register')->with('error', 'Registration failed, please try again.');
     }
 }
@@ -69,9 +69,8 @@ public function loginProcess(Request $request)
 
         $user = Auth::user();
 
-        // Cek role admin
         if ($user->role === 'admin') {
-            return redirect()->route('dashboard')->with('success', 'Welcome Admin!');
+            return redirect()->route('admin.dashboard')->with('success', 'Welcome Admin!');
         } else {
             return redirect()->route('landing')->with('success', 'Login successful!');
         }
@@ -83,13 +82,10 @@ public function loginProcess(Request $request)
 
     public function logout(Request $request)
 {
-    Auth::logout(); // Hapus autentikasi user dari sistem
-
-    // Hapus session sepenuhnya
+    Auth::logout(); 
     $request->session()->invalidate();
     $request->session()->regenerateToken();
 
-    // Redirect ke landing page
     return redirect('/')->with('success', 'You have been logged out!');
 }
 

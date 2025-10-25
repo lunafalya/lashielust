@@ -28,29 +28,33 @@
             <div class="navigation-menu mb-2">
                 <ul class="list-unstyled">
                     <li class="mb-3">
-                        <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') || request()->routeIs('dashboard.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') || request()->routeIs('admin.dashboard.*') ? 'active' : '' }}">
                             <i class="fas fa-th-large me-3"></i> 
                             Dashboard
                         </a>
                     </li>
                     <li class="mb-3">
-                        <a href="{{ route('notifications') }}" class="nav-link {{ request()->routeIs('notifications') || request()->routeIs('notifications.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.notifications') }}" 
+                        class="nav-link {{ request()->routeIs('admin.notifications') || request()->routeIs('admin.notifications.*') ? 'active' : '' }}">
                             <i class="fas fa-bell me-3"></i> 
                             Notifications
                         </a>
                     </li>
                     <li class="mb-3">
-                        <a href="{{ route('admin.services') }}" class="nav-link {{ request()->routeIs('services') || request()->routeIs('servicesadmin.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.services') }}" 
+                        class="nav-link {{ request()->routeIs('admin.services') || request()->routeIs('admin.services.*') ? 'active' : '' }}">
                             <i class="fas fa-concierge-bell me-3"></i> Services
                         </a>
                     </li>
                     <li class="mb-3">
-                        <a href="{{ route('bookingadmin') }}" class="nav-link {{ request()->routeIs('booking') || request()->routeIs('bookingadmin.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.bookings') }}"
+                        class="nav-link {{ request()->routeIs('admin.bookings') || request()->routeIs('admin.bookings.*') ? 'active' : '' }}">
                             <i class="fas fa-shopping-cart me-3"></i> Booking
                         </a>
                     </li>
                     <li class="mb-3">
-                        <a href="{{ route('reviewadmin') }}" class="nav-link {{ request()->routeIs('review') || request()->routeIs('reviewadmin.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.reviews') }}" 
+                        class="nav-link {{ request()->routeIs('admin.reviews') || request()->routeIs('admin.reviews.*') ? 'active' : '' }}">
                             <i class="fas fa-comment-dots me-3"></i> Review
                         </a>
                     </li>

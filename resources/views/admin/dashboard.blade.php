@@ -9,8 +9,6 @@
 <div class="row mb-4">
     <div class="col-12">
         <div class="p-4 card-content-bg">
-            
-
             <div class="row">
                 <div class="col-md-7">
                     <h1 class="fw-bold">Welcome {{ $user->name }}!</h1>
@@ -38,9 +36,9 @@
             <div class="d-flex align-items-center mb-2">
                 <div class="icon-wrapper me-3"> 
                     <i class="fas fa-shopping-cart fa-lg"></i> </div>
-                <p class="mb-0 fw-medium">Today's Order</p>
+                <p class="mb-0 fw-medium">Total Order</p>
             </div>
-            <div class="stat-number fw-bold">115</div> 
+             <small class="stat-number fw-bold">Total {{ $totalOrders }} orders</small>
         </div>
     </div>
     
@@ -51,7 +49,7 @@
                     <i class="fas fa-sack-dollar fa-lg"></i> </div>
                 <p class="mb-0 fw-medium">Today's Income</p>
             </div>
-            <div class="stat-number fw-bold">Rp 50.000</div>
+            <div class="stat-number fw-bold">Rp {{ number_format($totalUang, 0, ',', '.') }}</div>
         </div>
     </div>
 </div>
@@ -59,24 +57,44 @@
 <div class="card mb-4 card-content-bg overflow-auto">
     
     <h3 class="pt-4 px-3 fw-bold mb-3">RECENT ORDERS</h3>
-    
     <div class="px-3">
         <table class="table table-striped table-hover mb-4">
             <thead class="table-header-custom">
-                <tr>
-                    <th scope="col">No.</th>
-                    <th scope="col">ORDER NO</th>
-                    <th scope="col">CUSTOMER NAME</th>
-                    <th scope="col">STATUS</th>
-                    <th scope="col">DATE</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>1</td><td>#001</td><td>John Doe</td><td>Completed</td><td>May 10, 2024</td></tr>
-                <tr><td>2</td><td>#002</td><td>Jane Smith</td><td>Pending</td><td>May 11, 2024</td></tr>
-            </tbody>
-        </table>
-    </div>
+                        <tr>
+                            <th>ID</th>
+                            <th>User</th>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($bookings as $booking)
+                            <tr>
+                                <td class="fw-bold text-muted">{{ $booking->id }}</td>
+                                <td>{{ $booking->user->email ?? '-' }}</td>
+                                <td>{{ $booking->service->name ?? '-' }}</td>
+                                <td>{{ \Carbon\Carbon::parse($booking->booking_date)->format('d-m-Y') }}</td>
+                                <td>{{ $booking->booking_time }}</td>
+                                <td>
+                                    @if ($booking->status == 'pending')
+                                        <span class="badge" style="background-color: #fcd881; color: #333;">Pending</span>
+                                    @elseif ($booking->status == 'completed')
+                                        <span class="badge text-white" style="background-color: #63d471;">Completed</span>
+                                    @else
+                                        <span class="badge bg-secondary">{{ ucfirst($booking->status) }}</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center text-muted">No recent orders found.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
 </div>
 
 <div class="card mb-5 card-content-bg overflow-auto">
@@ -92,8 +110,25 @@
                     <th scope="col">Last Update</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr><td>1</td><td>New booking received.</td><td>5 mins ago</td></tr>
+             <tbody>
+                @forelse ($notifications as $index => $notification)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>
+                            @if ($notification['type'] === 'booking')
+                                <i class="fas fa-box me-2 text-dark"></i>
+                            @else
+                                <i class="fas fa-comment-dots me-2 text-dark"></i>
+                            @endif
+                            {{ $notification['message'] }}
+                        </td>
+                        <td>{{ \Carbon\Carbon::parse($notification['created_at'])->diffForHumans() }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="3" class="text-center text-muted py-4">No notifications yet.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

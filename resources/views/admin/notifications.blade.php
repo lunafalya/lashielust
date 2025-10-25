@@ -23,63 +23,46 @@
     
     <hr class="mb-4">
     
-    <table class="table table-hover mb-0">
-        <tbody>
-            
-            
-            <tr>
-                <td class="fw-bold align-middle" style="width: 50px;">1</td>
-                
-                <td class="align-middle">
-                    <i class="fas fa-box fa-lg me-3 text-dark"></i> 
-                    <span class="fw-medium">Booking masuk</span> untuk "nail art" pukul "10.00-12.00"
-                </td>
-                
-                <td class="text-muted text-end align-middle" style="width: 120px;">1 minutes ago</td>
-                
-                <td class="text-end align-middle" style="width: 150px;">
-                    <button class="btn btn-sm" style="background-color: #fcd881; color: #333; font-weight: bold;">Mark as Read</button>
-                </td>
-            </tr>
-            
-            <tr>
-                <td class="fw-bold align-middle">2</td>
-                <td class="align-middle">
-                    <i class="fas fa-comment-dots fa-lg me-3 text-dark"></i>
-                    <span class="fw-medium">Ulasan bintang 5</span> diterima untuk "Jamur Kancing"
-                </td>
-                <td class="text-muted text-end align-middle">5 minutes ago</td>
-                <td class="text-end align-middle">
-                    <button class="btn btn-sm" style="background-color: #fcd881; color: #333; font-weight: bold;">Mark as Read</button>
-                </td>
-            </tr>
+<table class="table table-hover mb-0 align-middle">
+            <tbody>
+                @forelse ($notifications as $index => $notification)
+                    <tr>
+                        <td class="fw-bold align-middle" style="width: 50px;">{{ $index + 1 }}</td>
 
-            <tr>
-                <td class="fw-bold align-middle">3</td>
-                <td class="align-middle">
-                    <i class="fas fa-check-circle fa-lg me-3 text-success"></i> 
-                    Pesanan <span class="fw-medium">#12345 dikonfirmasi</span>
-                </td>
-                <td class="text-muted text-end align-middle">10 minutes ago</td>
-                <td class="text-end align-middle">
-                    <button class="btn btn-sm" style="background-color: #fcd881; color: #333; font-weight: bold;">Mark as Read</button>
-                </td>
-            </tr>
+                        <td class="align-middle">
+                            @if ($notification['type'] === 'booking')
+                                <i class="fas fa-box fa-lg me-3 text-dark"></i>
+                            @else
+                                <i class="fas fa-comment-dots fa-lg me-3 text-dark"></i>
+                            @endif
 
-            <tr>
-                <td class="fw-bold align-middle">4</td>
-                <td class="align-middle">
-                    <i class="fas fa-times-circle fa-lg me-3 text-danger"></i> 
-                    Pesanan <span class="fw-medium">#12344 dibatalkan</span>
-                </td>
-                <td class="text-muted text-end align-middle">15 minutes ago</td>
-                <td class="text-end align-middle">
-                    <button class="btn btn-sm" style="background-color: #fcd881; color: #333; font-weight: bold;">Mark as Read</button>
-                </td>
-            </tr>
-            
-        </tbody>
-    </table>
+                            <span class="fw-medium">
+                                @if ($notification['type'] === 'booking')
+                                    Booking masuk
+                                @else
+                                    Ulasan diterima
+                                @endif
+                            </span>
+                            – {!! $notification['message'] !!}
+                        </td>
+
+                        <td class="text-muted text-end align-middle" style="width: 150px;">
+                            {{ \Carbon\Carbon::parse($notification['created_at'])->diffForHumans() }}
+                        </td>
+
+                        <!-- <td class="text-end align-middle" style="width: 160px;">
+                            <button class="btn btn-sm" style="background-color: #fcd881; color: #333; font-weight: bold;">
+                                Mark as Read
+                            </button>
+                        </td> -->
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" class="text-center text-muted py-4">No notifications yet.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
     
 </div>
 

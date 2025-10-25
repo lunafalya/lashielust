@@ -13,7 +13,7 @@ class BookingController extends Controller
     public function create($id)
 {
     $service = Service::findOrFail($id);
-    $user = auth()->user(); // ambil data user yang login
+    $user = auth()->user();
 
     return view('home.booking', compact('service', 'user'));
 }
