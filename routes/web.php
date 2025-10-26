@@ -7,11 +7,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AdminServiceController;
 use App\Http\Controllers\AdminBookingController;
 use App\Http\Controllers\AdminReviewController;
 use App\Http\Controllers\AdminNotificationController;
+
 
 
 // USERS
@@ -41,9 +43,15 @@ Route::get('/aboutus', function () {
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
 Route::get('/services/{id}', [ServiceController::class, 'show'])->name('services.show');
 
-Route::get('/contactus', function () {
-    return view('home.contactus');
-});
+// Halaman contact untuk user
+Route::get('/contactus', [MessageController::class, 'show'])->name('home.contactus');
+
+// Kirim pesan (user harus login agar bisa kirim)
+Route::post('/contact/send', [MessageController::class, 'store'])
+    ->middleware('auth')
+    ->name('contact.send');
+
+
 
 Route::get('/detail', function () {
     return view('home.detail');
@@ -76,17 +84,19 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // ADMIN
 // Dashboard
-Route::prefix('admin')->middleware(['auth'])->group(function () {
+
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/messages', [MessageController::class, 'index'])->name('admin.messages');
 });
 
 // Notifications
-Route::prefix('admin')->middleware(['auth'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/notifications', [AdminNotificationController::class, 'index'])->name('admin.notifications');
 });
 
 // Service
-Route::prefix('admin')->middleware(['auth'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/services', [AdminServiceController::class, 'index'])->name('admin.services');
     Route::post('/services', [AdminServiceController::class, 'store'])->name('services.store');
     Route::delete('/services/{id}', [AdminServiceController::class, 'destroy'])->name('services.destroy');
@@ -94,19 +104,17 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 });
 
 // Booking
-Route::prefix('admin')->middleware(['auth'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/bookings', [AdminBookingController::class, 'index'])->name('admin.bookings');
 });
 
-Route::prefix('admin')->middleware(['auth'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/reviews', [AdminReviewController::class, 'index'])->name('admin.reviews');
 });
 
-Route::get('/profileadmin', function () {
-    return view('admin.profile');
-})->name('profileadmin');
 
-// Menampilkan halaman profile admin
-Route::get('/admin/profile', [AdminProfileController::class, 'edit'])->name('profileadmin');
-Route::get('/admin/profile/edit', [AdminProfileController::class, 'edit'])->name('admin.profile.edit');
-Route::post('/admin/profile/update', [AdminProfileController::class, 'update'])->name('admin.profile.update');
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/profile', [AdminProfileController::class, 'edit'])->name('admin.profile');
+    Route::get('/profile/edit', [AdminProfileController::class, 'edit'])->name('admin.profile.edit');
+    Route::post('/profile/update', [AdminProfileController::class, 'update'])->name('admin.profile.update');
+});

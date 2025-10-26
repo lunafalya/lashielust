@@ -49,12 +49,6 @@
                         <td class="text-muted text-end align-middle" style="width: 150px;">
                             {{ \Carbon\Carbon::parse($notification['created_at'])->diffForHumans() }}
                         </td>
-
-                        <!-- <td class="text-end align-middle" style="width: 160px;">
-                            <button class="btn btn-sm" style="background-color: #fcd881; color: #333; font-weight: bold;">
-                                Mark as Read
-                            </button>
-                        </td> -->
                     </tr>
                 @empty
                     <tr>

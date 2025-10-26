@@ -41,6 +41,13 @@
                         </a>
                     </li>
                     <li class="mb-3">
+                        <a href="{{ route('admin.messages') }}" 
+                        class="nav-link {{ request()->routeIs('admin.messages') || request()->routeIs('admin.messages.*') ? 'active' : '' }}">
+                            <i class="fas fa-bell me-3"></i> 
+                            Message
+                        </a>
+                    </li>
+                    <li class="mb-3">
                         <a href="{{ route('admin.services') }}" 
                         class="nav-link {{ request()->routeIs('admin.services') || request()->routeIs('admin.services.*') ? 'active' : '' }}">
                             <i class="fas fa-concierge-bell me-3"></i> Services
@@ -60,20 +67,13 @@
                     </li>
                 </ul>
             </div>
-
             <hr>
-
-            <div class="account-center-image text-center mb-2">
-                <p class="fw-medium">Account Center</p>
-                <img src="{{ asset('images/accountcenter.png') }}" alt="Account Center Graphic" class="img-fluid">
-            </div>
-
-            <form id="logout-form-sidebar" action="#" method="POST">
+            <form action="{{ route('logout') }}" method="POST">
                 @csrf
-                <button type="submit" class="btn btn-logout text-center">
-                    Log out
+                <button type="submit" class="btn btn-logout text-center" style="pointer-events: auto;">
+                Log Out
                 </button>
-            </form>
+                </form>
         </div>
     </div>
     <div class="main-content"> 
@@ -86,14 +86,19 @@
             </div>
 
             <div class="user-info d-flex align-items-center">
-                <button class="btn me-3"><i class="fas fa-bell"></i></button>
+                <form action="{{ route('admin.notifications') }}">
+                @csrf
+                <button type="submit" class="btn me-3" style="pointer-events: auto;">
+                <i class="fas fa-bell"> </i>
+                </button>
+                </form>
+
                 <div class="dropdown">
                     <a href="#" role="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" class="d-flex align-items-center text-decoration-none text-dark">
                      @if($user && $user->profile_photo)
                         <img src="{{ asset('storage/' . $user->profile_photo) }}" width="80" height="80" style="border-radius:50%;object-fit:cover;">
                     @else
-                    @endif    
-                    <!-- <img src="{{ asset('images/user.png') }}" alt="User Avatar" class="me-2"> -->
+                    @endif
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
@@ -112,18 +117,20 @@
                         <li><hr class="dropdown-divider"></li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('profileadmin') }}">
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.profile') }}">
                                 <i class="fas fa-user me-3 dropdown-icon-lg"></i> 
                                 My Profile
                             </a>
                         </li>
                         
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#" 
-                            onclick="event.preventDefault(); document.getElementById('logout-form-header').submit();">
-                                <i class="fas fa-sign-out-alt me-3 dropdown-icon-lg"></i> 
-                                Logout
-                            </a>
+                            <form action="{{ route('logout') }}" method="POST" class="dropdown-item d-flex align-items-center">
+                                @csrf
+                                <i class="fas fa-user me-3 dropdown-icon-lg"></i>
+                                <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer;">
+                                Log Out
+                                </button>
+                            </form>
                         </li>
                     </ul>
                 </div>

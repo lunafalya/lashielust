@@ -24,7 +24,7 @@
         <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
             <div class="card service-card" style="border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
                 
-                <div class="service-image-wrapper" style="background-color: #f7f3e8; padding: 10px; border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem;">
+                <div class="service-image-wrapper" style="background-color: #f7f3e8; padding: 10px; ">
                 <img src="{{ asset('storage/' . $service->file_path) }}" alt="{{ $service->name }}" class="card-img-top" style="max-height: 150px; width: 100%; object-fit: contain; border-radius: 0.3rem;">
                 </div>
                 
@@ -47,10 +47,13 @@
                             <i class="fas fa-pencil-alt"></i>
                         </button>
                         
-                        <form action="/services/{{ $service->id }}" method="POST" class="d-inline">
+                        <form action="{{ route('services.destroy', $service->id) }}" 
+                            method="POST" 
+                            class="d-inline"
+                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus layanan ini?');">
                             @csrf
                             @method('DELETE') 
-                            <button type="submit" class="btn btn-sm text-danger" title="Delete" onclick="return confirm('Apakah Anda yakin ingin menghapus layanan ini?');">
+                            <button type="submit" class="btn btn-sm text-danger" title="Delete">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </form>
@@ -93,13 +96,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Update form action
             const form = document.querySelector('#editServiceModal form');
-            form.action = `/services/update/${id}`; // pastikan route sesuai route('services.update', $id)
+            form.action = `/services/update/${id}`;
         });
     });
 });
 </script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> {{-- Pastikan jQuery dimuat --}}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
         
@@ -144,4 +147,39 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.delete-btn');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+
+            // Pop-up konfirmasi
+            if (confirm('Apakah Anda yakin ingin menghapus layanan ini?')) {
+                fetch(`/admin/services/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Hapus elemen dari view tanpa reload
+                        this.closest('tr').remove();
+
+                        // Notifikasi sukses
+                        alert('Service deleted successfully!');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        });
+    });
+});
+</script>
+
+
 @endsection

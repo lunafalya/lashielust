@@ -15,9 +15,8 @@ class AuthController extends Controller
 {
     public function showRegisterForm()
 {
-    return view('home.register'); // pastikan ini sesuai folder
+    return view('home.register');
 }
-
     public function register(Request $request)
     {
         try {
@@ -65,16 +64,22 @@ public function loginProcess(Request $request)
     $credentials = $request->only('email', 'password');
 
     if (Auth::attempt($credentials)) {
-        $request->session()->regenerate();
+    $request->session()->regenerate();
 
-        $user = Auth::user();
+    $user = Auth::user();
 
-        if ($user->role === 'admin') {
-            return redirect()->route('admin.dashboard')->with('success', 'Welcome Admin!');
-        } else {
-            return redirect()->route('landing')->with('success', 'Login successful!');
-        }
+    if ($user->role === 'admin') {
+        return redirect()->route('admin.dashboard')->with('success', 'Welcome Admin!');
     }
+
+    if ($user->role === 'user') {
+        return redirect()->route('landing')->with('success', 'Login successful!');
+    }
+
+    // Jika ada role lain
+    Auth::logout();
+    return redirect()->route('login')->with('error', 'Unauthorized access!');
+}
 
     return back()->with('error', 'Incorrect email or password!');
 }

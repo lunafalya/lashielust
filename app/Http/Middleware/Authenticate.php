@@ -27,4 +27,5 @@ class Authenticate
                     ->header('Expires','Sat, 01 Jan 1990 00:00:00 GMT');
 }
 
+
 }

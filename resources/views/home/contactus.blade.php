@@ -36,13 +36,19 @@
     </div>
 </section>
 
+
+@if (session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
   <section class="form-section">
     <div class="form-header">
         <img src="{{ asset('images/getintouchwithus.png') }}" alt="getintouchwithus">
     </div>
     
     <div class="form-card-wrapper">
-        <form action="#" method="POST" class="contact-form">
+        <form action="{{ route('contact.send') }}" method="POST" class="contact-form">
+            @csrf
             <div class="input-group">
                 <img src="{{ asset('images/user.png') }}" alt="user">
                 <input type="text" id="name" name="name" 

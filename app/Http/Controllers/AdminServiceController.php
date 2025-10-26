@@ -75,15 +75,16 @@ class AdminServiceController extends Controller
     }
 
 
-    public function destroy($id)
-    {
-        $service = Service::findOrFail($id);
+public function destroy($id)
+{
+    $service = Service::findOrFail($id);
 
-        if ($service->file_path && Storage::disk('public')->exists($service->file_path)) {
-            Storage::disk('public')->delete($service->file_path);
-        }
-
-        $service->delete();
-        return redirect()->route('admin.services')->with('success', 'Service deleted successfully!');
+    // Hapus file gambar jika ada
+    if ($service->file_path && Storage::disk('public')->exists($service->file_path)) {
+        Storage::disk('public')->delete($service->file_path);
     }
+
+    $service->delete();
+    return redirect()->route('admin.services')->with('success', 'Service deleted successfully!');
+}
 }

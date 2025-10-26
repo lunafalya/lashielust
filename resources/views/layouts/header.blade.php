@@ -6,10 +6,13 @@
   </div>
   <nav>
     <ul>
-      <li><a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Home</a></li>
+      <li><a href="{{ url('/landing') }}" class="{{ request()->is('landing') ? 'active' : '' }}">Home</a></li>
       <li><a href="{{ url('/aboutus') }}" class="{{ request()->is('aboutus') ? 'active' : '' }}">About Us</a></li>
       <li><a href="{{ url('/services') }}" class="{{ request()->is('services') ? 'active' : '' }}">Services</a></li>
-      <li><a href="{{ url('/contactus') }}" class="{{ request()->is('contactus') ? 'active' : '' }}">Contact Us</a></li>
+      <li><a href="{{ route('home.contactus') }}" class="{{ request()->routeIs('home.contactus') ? 'active' : '' }}">
+     Contact Us
+  </a>
+</li>
     </ul>
   </nav>
   <div class="nav-icons">
