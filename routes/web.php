@@ -19,7 +19,7 @@ use App\Http\Controllers\AdminNotificationController;
 // USERS
 Route::get('/', function () {
     return view('home.landing');
-})->name('landing');
+})->name('');
 
 Route::get('/landing', [AuthController::class, 'index'])->name('landing');
 

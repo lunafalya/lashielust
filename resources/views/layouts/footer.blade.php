@@ -25,9 +25,9 @@
       <div class="footer-links">
         <h4>Explore</h4>
         <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#aboutus">About Us</a></li>
-          <li><a href="#service">Services</a></li>
+          <li><a href={{ url('/landing') }}>Home</a></li>
+          <li><a href={{ url('/aboutus') }}>About Us</a></li>
+          <li><a href={{ url('/services') }}>Services</a></li>
           <li><a href={{ url('/contactus') }}>Contact Us</a></li>
         </ul>
       </div>
