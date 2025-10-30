@@ -8,7 +8,6 @@
   <link rel="icon" href="img/core-img/logo.png">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
   <link href="css/log.css" rel="stylesheet">
 </head>
 <body>
@@ -31,12 +30,12 @@
         @csrf
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" required> <!-- TAMBAH name -->
+            <input type="email" class="form-control" id="email" name="email" required>
         </div>
 
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required> <!-- TAMBAH name -->
+            <input type="password" class="form-control" id="password" name="password" required>
         </div>
 
         <div class="mb-3 form-check">
@@ -49,7 +48,6 @@
 
         <div class="login-footer mt-4">
             <p class="mb-1">Don't have an account? <a href="{{ url('/register')}}">Register</a></p>
-            <!-- <a href="{{ url('/forgotpassword')}}">Forgot Password?</a> -->
         </div>
     </div>
   </div>

@@ -8,6 +8,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AdminServiceController;
 use App\Http\Controllers\AdminBookingController;
@@ -19,7 +20,7 @@ use App\Http\Controllers\AdminNotificationController;
 // USERS
 Route::get('/', function () {
     return view('home.landing');
-})->name('');
+})->name('landing');
 
 Route::get('/landing', [AuthController::class, 'index'])->name('landing');
 
@@ -59,8 +60,9 @@ Route::get('/detail', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/bookings/{id}', [BookingController::class, 'create'])->name('bookings.create');
+    Route::post('/bookings/store', [BookingController::class, 'store'])->name('bookings.store');
 });
-Route::post('/bookings/store', [BookingController::class, 'store'])->name('bookings.store');
+
 
 Route::middleware('auth')->group(function () {
     // Tampilkan profil (view: resources/views/home/profile.blade)
@@ -118,3 +120,10 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/profile/edit', [AdminProfileController::class, 'edit'])->name('admin.profile.edit');
     Route::post('/profile/update', [AdminProfileController::class, 'update'])->name('admin.profile.update');
 });
+
+
+// Gabungan
+Route::get('/payment/{booking_id}', [PaymentController::class, 'createTransaction'])->name('payment.createPage');
+Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+Route::get('/payment/failed', [PaymentController::class, 'failed'])->name('payment.failed');
+

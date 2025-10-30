@@ -84,6 +84,10 @@ public function loginProcess(Request $request)
     return back()->with('error', 'Incorrect email or password!');
 }
 
+public function index()
+{
+    return view('home.landing');
+}
 
     public function logout(Request $request)
 {

@@ -27,7 +27,7 @@ public function store(Request $request)
         'notes' => 'nullable',
     ]);
 
-    Booking::create([
+    $booking = Booking::create([
         'user_id' => auth()->id(),
         'service_id' => $request->service_id,
         'booking_date' => $request->booking_date,
@@ -36,7 +36,8 @@ public function store(Request $request)
         'status' => 'pending',
     ]);
 
-    return redirect()->route('services.index')->with('success', 'Booking successful! We will contact you shortly.');
+
+    return redirect()->route('payment.createPage', ['booking_id' => $booking->id]);
 }
 
     public function history()
