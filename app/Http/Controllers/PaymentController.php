@@ -48,7 +48,36 @@ public function createTransaction($booking_id)
 
     public function callback(Request $request)
     {
-        // Ini untuk handle notifikasi dari Midtrans (payment success / pending / failed)
-        // Kamu bisa isi logika update status booking di sini
+        $serverKey = config('midtrans.server_key');
+        $hashed = hash('sha512',
+            $request->order_id . $request->status_code . $request->gross_amount . $serverKey
+        );
+
+        if ($hashed === $request->signature_key) {
+            $bookingId = str_replace('BOOK-', '', $request->order_id);
+            $booking = \App\Models\Booking::find($bookingId);
+
+            if ($booking) {
+                if ($request->transaction_status == 'capture' || $request->transaction_status == 'settlement') {
+                    $booking->update(['status' => 'paid']);
+                } elseif ($request->transaction_status == 'pending') {
+                    $booking->update(['status' => 'pending']);
+                } elseif ($request->transaction_status == 'deny' || $request->transaction_status == 'cancel' || $request->transaction_status == 'expire') {
+                    $booking->update(['status' => 'failed']);
+                }
+            }
+        }
+
+        return response()->json(['status' => 'success']);
+    }
+
+        public function success()
+    {
+        return view('home.payment-success');
+    }
+
+    public function failed()
+    {
+        return view('home.payment-failed');
     }
 }

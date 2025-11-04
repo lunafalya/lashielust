@@ -82,7 +82,7 @@
         </div>
         <div class="card">
           <a href="{{ url('/services') }}">
-            <img src="{{ asset('images/spa.jpeg') }}" alt="Massage">
+            <img src="{{ asset('images/Spa.jpeg') }}" alt="Massage">
           <p>Body</p>
           </a>
           

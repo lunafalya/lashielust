@@ -65,11 +65,8 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::middleware('auth')->group(function () {
-    // Tampilkan profil (view: resources/views/home/profile.blade)
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
-    // Tampilkan form edit (view: resources/views/home/editprofile.blade)
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Proses update (form method PUT ke route('profile.update'))
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
@@ -121,9 +118,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::post('/profile/update', [AdminProfileController::class, 'update'])->name('admin.profile.update');
 });
 
-
-// Gabungan
-Route::get('/payment/{booking_id}', [PaymentController::class, 'createTransaction'])->name('payment.createPage');
-Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
-Route::get('/payment/failed', [PaymentController::class, 'failed'])->name('payment.failed');
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/payment/{booking_id}', [PaymentController::class, 'createTransaction'])->name('payment.createPage');
+    Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
+    Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+    Route::get('/payment/failed', [PaymentController::class, 'failed'])->name('payment.failed');
+});

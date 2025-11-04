@@ -30,7 +30,7 @@
   </div>
 </div>
 
-<script src="https://app.sandbox.midtrans.com/snap/snap.js"
+<script src="https://app.midtrans.com/snap/snap.js"
         data-client-key="{{ config('midtrans.client_key') }}"></script>
 <script type="text/javascript">
     document.getElementById('pay-button').onclick = function () {
