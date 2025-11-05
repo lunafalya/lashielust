@@ -27,11 +27,11 @@
     <div class="contact-container">
         <div class="contact-image-area">
             <div class="image-shadow-bg"></div>
-            <img src="{{ asset('images/serviceshair.png') }}" alt="Model with beautiful hair" class="contact-main-image">
+            <img src="{{ asset('images/Group2.png') }}" alt="Model with beautiful hair" class="contact-main-image">
         </div>
 
         <div class="contact-content">
-        <img src="{{ asset('images/getintouch.png') }}" alt="getintouch">
+        <img src="{{ asset('images/Content.png') }}" alt="getintouch">
         </div>
     </div>
 </section>
@@ -43,7 +43,7 @@
 
   <section class="form-section">
     <div class="form-header">
-        <img src="{{ asset('images/getintouchwithus.png') }}" alt="getintouchwithus">
+        <img src="{{ asset('images/contact1.png') }}" alt="getintouchwithus">
     </div>
     
     <div class="form-card-wrapper">
