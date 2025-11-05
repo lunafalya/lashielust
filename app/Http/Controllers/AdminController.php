@@ -54,7 +54,6 @@ class AdminController extends Controller
         $totalUang = 0;
 
         foreach ($bookings as $booking) {
-            // Kalikan harga dengan jumlahnya, lalu tambahkan ke total
             $totalUang += ($booking->service->price);
         }
 

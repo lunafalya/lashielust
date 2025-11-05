@@ -13,8 +13,8 @@
     <a href="https://www.linkedin.com/"class="service-link">
       <img src="{{ asset('images/3.png') }}" alt="3">
     </a>
-    
-    <a href="https://www.instagram.com/"class="service-link">
+
+    <a href="https://www.instagram.com/lashielust/" class="service-link">
       <img src="{{ asset('images/4.png') }}" alt="4">
     </a>
     
@@ -33,8 +33,8 @@
       </div>
       <div class="footer-contact">
         <h4>Keep in Touch</h4>
-        <p>Mail: support@servicemarket.com</p>
-        <p>Phone: (+22) 123 - 4567 - 900</p>
+        <p><a href={{ url('/contactus') }}>Mail: lashielust@gmail.com</a></p>
+        <p><a href=https://wa.me/message/Z6PYTAFVPXNJA1>WhatsApp: +62 877 7018 7325</a></p>
       </div>
     </div>
   </div>

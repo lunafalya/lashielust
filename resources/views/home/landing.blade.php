@@ -17,7 +17,7 @@
     <div class="home-content">
       <img src="{{ asset('images/home1.png') }}" alt="home1">
       <p>Eleifend arcu non lorem justo in tempus purus gravida. Est tortor egestas sed feugiat elementum.</p>
-      <a href="{{ url('/booking') }}" class="btn">Book Appointment Now</a>
+      <a href={{ url('/services') }} class="btn">Book Appointment Now</a>
     </div>
   </section>
 
@@ -27,8 +27,9 @@
       <div class="about-text">
         <img src="{{ asset('images/aboutus1.png') }}" alt="aboutus1">
         <p>
-          Eleifend arcu non lorem justo in tempus purus gravida. Est tortor egestas sed feugiat elementum.
-          Vivamus nulla amet a ultrices massa dui. Tortor est purus morbi vitae arcu suspendisse amet.
+          At Lashie Lust, we believe every pair of eyes tells a beautiful story.
+          Our mission is to help you express confidence and charm through lashes that look natural and feel comfortable.
+          With skilled lash artists and high-quality materials, we bring elegance to every blink — so you can shine effortlessly every day.
         </p>
       </div>
 
@@ -98,18 +99,18 @@
     <div class="testimonial-list">
       <div class="testimonial">
         <img src="{{ asset('images/kutip.png') }}" alt="kutip" class="quote-icon" >
-        <p>“Headspace provides me with a connection to myself and a disconnection from negative thoughts.”</p>
-        <span>- Kari, UK</span>
+        <p>“Absolutely love my lashes! They’re soft, natural-looking, and last for weeks!”</p>
+        <span>- Rina S., Bekasi</span>
       </div>
       <div class="testimonial">
         <img src="{{ asset('images/kutip.png') }}" alt="kutip" class="quote-icon">
-        <p>“Changing my thoughts has allowed me to change my life.”</p>
-        <span>- Danielle, London</span>
+        <p>“Such a relaxing experience! The staff were super friendly and my lashes turned out perfect”</p>
+        <span>- Luna, Bogor</span>
       </div>
       <div class="testimonial">
         <img src="{{ asset('images/kutip.png') }}" alt="kutip" class="quote-icon">
-        <p>“A happy workflow leads to a happy environment.”</p>
-        <span>- Jamie, Spain</span>
+        <p>“These are the best extensions I’ve ever had — lightweight and long-lasting. Totally worth it!”</p>
+        <span>- Putri, Depok</span>
       </div>
     </div>
   </section>

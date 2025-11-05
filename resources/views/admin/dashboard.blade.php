@@ -47,7 +47,7 @@
             <div class="d-flex align-items-center mb-2">
                 <div class="icon-wrapper me-3">
                     <i class="fas fa-sack-dollar fa-lg"></i> </div>
-                <p class="mb-0 fw-medium">Today's Income</p>
+                <p class="mb-0 fw-medium">Total Income</p>
             </div>
             <div class="stat-number fw-bold">Rp {{ number_format($totalUang, 0, ',', '.') }}</div>
         </div>

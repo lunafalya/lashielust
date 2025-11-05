@@ -44,6 +44,12 @@
                         <span class="status {{ strtolower($booking->status) }}">
                             {{ ucfirst($booking->status) }}
                         </span>
+                        @if($booking->status == 'pending')
+                            <a href="{{ route('payment.createPage', $booking->id) }}" 
+                            class="btn btn-sm btn-warning" style="margin-left: 10px;">
+                            Complete Payment
+                            </a>
+                        @endif
                     </td>
                     <td>
                         @if($booking->status == 'approved')
