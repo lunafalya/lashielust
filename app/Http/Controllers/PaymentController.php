@@ -24,7 +24,7 @@ public function createTransaction($booking_id)
 
     $params = [
         'transaction_details' => [
-            'order_id' => 'BOOK-' . uniqid(),
+            'order_id' => 'BOOK-' . $booking->id,
             'gross_amount' => $service->price,
         ],
         'customer_details' => [
@@ -47,31 +47,38 @@ public function createTransaction($booking_id)
 
 
     public function callback(Request $request)
-    {
-        $serverKey = config('midtrans.server_key');
-        $hashed = hash('sha512',
-            $request->order_id . $request->status_code . $request->gross_amount . $serverKey
-        );
+{
+    $serverKey = config('midtrans.server_key');
+    $hashed = hash('sha512',
+        $request->order_id . $request->status_code . $request->gross_amount . $serverKey
+    );
 
-        if ($hashed === $request->signature_key) {
-            $bookingId = str_replace('BOOK-', '', $request->order_id);
-            $booking = \App\Models\Booking::find($bookingId);
+    if ($hashed === $request->signature_key) {
+        $bookingId = str_replace('BOOK-', '', $request->order_id);
+        $booking = \App\Models\Booking::find($bookingId);
 
-            if ($booking) {
-                if ($request->transaction_status == 'capture' || $request->transaction_status == 'settlement') {
+        if ($booking) {
+            switch ($request->transaction_status) {
+                case 'capture':
+                case 'settlement':
                     $booking->update(['status' => 'approved']);
-                } elseif ($request->transaction_status == 'pending') {
+                    break;
+                case 'pending':
                     $booking->update(['status' => 'pending']);
-                } elseif ($request->transaction_status == 'deny' || $request->transaction_status == 'cancel' || $request->transaction_status == 'expire') {
+                    break;
+                case 'deny':
+                case 'cancel':
+                case 'expire':
                     $booking->update(['status' => 'cancelled']);
-                }
+                    break;
             }
         }
-
-        return response()->json(['status' => 'success']);
     }
 
-        public function success()
+    return response()->json(['status' => 'success']);
+}
+
+    public function success()
     {
         return view('home.payment-success');
     }
