@@ -36,7 +36,7 @@
     document.getElementById('pay-button').onclick = function () {
         snap.pay('{{ $snapToken }}', {
             onSuccess: function(result){
-                window.location.href = '/service/{{ $service->id }}'; // balik ke detail service
+                window.location.href = '/services/{{ $service->id }}'; // balik ke detail service
             },
             onPending: function(result){
                 alert("Payment pending");
