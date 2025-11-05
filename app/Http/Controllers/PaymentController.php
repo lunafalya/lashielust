@@ -59,11 +59,11 @@ public function createTransaction($booking_id)
 
             if ($booking) {
                 if ($request->transaction_status == 'capture' || $request->transaction_status == 'settlement') {
-                    $booking->update(['status' => 'paid']);
+                    $booking->update(['status' => 'approved']);
                 } elseif ($request->transaction_status == 'pending') {
                     $booking->update(['status' => 'pending']);
                 } elseif ($request->transaction_status == 'deny' || $request->transaction_status == 'cancel' || $request->transaction_status == 'expire') {
-                    $booking->update(['status' => 'failed']);
+                    $booking->update(['status' => 'cancelled']);
                 }
             }
         }
