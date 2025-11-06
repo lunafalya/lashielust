@@ -46,7 +46,7 @@
                         </span>
                         @if($booking->status == 'pending')
                             <a href="{{ route('payment.createPage', $booking->id) }}" 
-                            class="btn btn-sm btn-warning" style="margin-left: 10px;">
+                            class="btn btn-sm btn-warning" style="margin-left: 5px;">
                             Complete Payment
                             </a>
                         @endif

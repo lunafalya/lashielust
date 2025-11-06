@@ -16,7 +16,7 @@
   <section id="home" class="home">
     <div class="home-content">
       <img src="{{ asset('images/home1.png') }}" alt="home1">
-      <p>Eleifend arcu non lorem justo in tempus purus gravida. Est tortor egestas sed feugiat elementum.</p>
+      <p>At Lashie Lust, we create beauty experiences that match your style; effortless, confident, and uniquely you.</p>
       <a href={{ url('/services') }} class="btn">Book Appointment Now</a>
     </div>
   </section>
