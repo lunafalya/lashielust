@@ -31,6 +31,7 @@
                 <th>Transaction Date</th>
                 <th>Service</th>
                 <th>Status</th>
+                <th>Action</th>
                 <th>Review</th>
             </tr>
         </thead>
@@ -44,10 +45,12 @@
                         <span class="status {{ strtolower($booking->status) }}">
                             {{ ucfirst($booking->status) }}
                         </span>
+                    </td>
+                    <td>
                         @if($booking->status == 'pending')
                             <a href="{{ route('payment.createPage', $booking->id) }}" 
-                            class="btn btn-sm btn-warning" style="margin-left: 5px;">
-                            Complete Payment
+                            class="review-btn add" style="margin-left: 5px;">
+                            Complete
                             </a>
                         @endif
                     </td>

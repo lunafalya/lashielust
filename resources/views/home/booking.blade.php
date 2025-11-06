@@ -39,13 +39,14 @@
                     </div>
 
                     <div class="input-row">
-                        <label style="font-weight: 400; color: white; text-align: left;">Booking Date : <input type="date" name="booking_date" required></label>
-                        <label style="font-weight: 400; color: white; text-align: left;">Booking Time : <select name="booking_time" required>
-                            <option disabled selected>Choose Your Time</option>
-                            <option value="08.00-10.00">08.00-10.00</option>
-                            <option value="10.00-12.00">10.00-12.00</option>
-                            <option value="12.00-14.00">12.00-14.00</option>
-                            <option value="14.00-16.00">14.00-16.00</option>
+                        <label style="font-weight: 400; color: white; text-align: left;">Booking Date : <input type="date" id="booking_date" name="booking_date" required></label>
+                        <label style="font-weight: 400; color: white; text-align: left;">Booking Time : 
+                            <select name="booking_time" id="booking_time" required>
+                                <option disabled selected>Choose Your Time</option>
+                                <option value="08.00-10.00">08.00-10.00</option>
+                                <option value="10.00-12.00">10.00-12.00</option>
+                                <option value="12.00-14.00">12.00-14.00</option>
+                                <option value="14.00-16.00">14.00-16.00</option>
                             <option value="16.00-18.00">16.00-18.00</option>
                         </select>
                     </div>
@@ -77,6 +78,65 @@
             }
         });
     </script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const dateInput = document.getElementById('booking_date');
+    const timeSelect = document.getElementById('booking_time');
+
+    dateInput.addEventListener('change', function() {
+
+        let date = this.value;
+        let serviceId = "{{ $service->id }}";
+
+        // Reset option
+        timeSelect.querySelectorAll("option").forEach(opt => {
+            opt.disabled = false;
+            opt.textContent = opt.value;
+        });
+
+        fetch(`/bookings/check?service_id=${serviceId}&booking_date=${date}`)
+            .then(response => response.json())
+            .then(data => {
+
+                data.forEach(time => {
+                    let opt = timeSelect.querySelector(`option[value="${time}"]`);
+                    if (opt) {
+                        opt.disabled = true;
+                        opt.textContent = `${time} (Booked)`;
+                    }
+                });
+
+                if (data.length >= 5) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Fully Booked",
+                        text: "Semua jam di tanggal ini sudah penuh. Silakan pilih tanggal lain.",
+                    });
+                }
+            });
+    });
+
+    timeSelect.addEventListener('change', function () {
+        let opt = this.options[this.selectedIndex];
+
+        if (opt.disabled) {
+            Swal.fire({
+                icon: "error",
+                title: "Jam Sudah Dibooking",
+                text: "Silakan pilih waktu lain.",
+            });
+
+            this.selectedIndex = 0;
+        }
+    });
+
+});
+</script>
 
 </body>
 </html>

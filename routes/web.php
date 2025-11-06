@@ -59,6 +59,7 @@ Route::get('/detail', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/bookings/check', [BookingController::class, 'checkBookedSlots']);
     Route::get('/bookings/{id}', [BookingController::class, 'create'])->name('bookings.create');
     Route::post('/bookings/store', [BookingController::class, 'store'])->name('bookings.store');
 });
