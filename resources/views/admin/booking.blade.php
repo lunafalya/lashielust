@@ -62,9 +62,11 @@
                                 <td>{{ $booking->booking_time }}</td>
                                 <td>
                                     @if ($booking->status == 'pending')
-                                        <span class="badge" style="background-color: #fcd881; color: #333;">Pending</span>
+                                        <span class="badge" style="background:#ffc107; color:#000;">Pending</span>
                                     @elseif ($booking->status == 'approved')
-                                        <span class="badge text-white" style="background-color: #63d471;">Approved</span>
+                                        <span class="badge" style="background:#4caf50; color:white;">Approved</span>
+                                    @elseif ($booking->status == 'cancelled')
+                                        <span class="badge" style="background:#999; color:white;">Cancelled</span>
                                     @else
                                         <span class="badge bg-secondary">{{ ucfirst($booking->status) }}</span>
                                     @endif

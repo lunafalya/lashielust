@@ -124,6 +124,3 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
     Route::get('/payment/failed', [PaymentController::class, 'failed'])->name('payment.failed');
 });
-
-Route::post('/midtrans/callback', [PaymentController::class, 'callback'])->name('midtrans.callback');
-Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');

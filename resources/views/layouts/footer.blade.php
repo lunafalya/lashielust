@@ -1,4 +1,3 @@
-  <!-- FOOTER -->
 <footer>
   <div class="footer-content">
     <img src="{{ asset('images/logo.png') }}" alt="Lashie Lust Logo">
@@ -33,7 +32,7 @@
       </div>
       <div class="footer-contact">
         <h4>Keep in Touch</h4>
-        <p><a href={{ url('/contactus') }}>Mail: lashielust@gmail.com</a></p>
+        <p><a href={{ url('/contactus') }} >Mail: lashielust@gmail.com</a></p>
         <p><a href=https://wa.me/message/Z6PYTAFVPXNJA1>WhatsApp: +62 877 7018 7325</a></p>
       </div>
     </div>

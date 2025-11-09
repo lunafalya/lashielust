@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Midtrans\Config;
 use Midtrans\Snap;
@@ -49,62 +50,65 @@ class PaymentController extends Controller
     }
 
 
-    public function callback(Request $request)
-    {
-        $serverKey = config('midtrans.server_key');
+public function callback(Request $request)
+{
+    // ✅ LOG EVERYTHING MIDTRANS SENDS
+    \Log::info('MIDTRANS CALLBACK RECEIVED:', $request->all());
 
-        // Validate signature
-        $hashed = hash('sha512',
-            $request->order_id .
-            $request->status_code .
-            $request->gross_amount .
-            $serverKey
-        );
+    $serverKey = config('midtrans.server_key');
 
-        if ($hashed !== $request->signature_key) {
-            return response()->json(['status' => 'invalid signature'], 403);
-        }
+    // Validate signature
+    $hashed = hash('sha512',
+        $request->order_id .
+        $request->status_code .
+        $request->gross_amount .
+        $serverKey
+    );
 
-        // ✅ Extract booking ID from unique order_id
-        // Example: BOOK-5-65f822d123 → raw = 5-65f822d123 → bookingId = 5
-        $raw = str_replace('BOOK-', '', $request->order_id);
-        $bookingId = explode('-', $raw)[0];
-
-        $booking = Booking::find($bookingId);
-
-        if (!$booking) {
-            return response()->json(['status' => 'booking not found'], 404);
-        }
-
-        // ✅ Update status based on Midtrans status
-        switch ($request->transaction_status) {
-            case 'capture':
-            case 'settlement':
-                $booking->update(['status' => 'approved']);
-                break;
-
-            case 'pending':
-                $booking->update(['status' => 'pending']);
-                break;
-
-            case 'deny':
-            case 'cancel':
-            case 'expire':
-                $booking->update(['status' => 'cancelled']);
-                break;
-        }
-
-        return response()->json(['status' => 'success']);
+    if ($hashed !== $request->signature_key) {
+        \Log::error('MIDTRANS INVALID SIGNATURE', [
+            'expected' => $hashed,
+            'received' => $request->signature_key
+        ]);
+        return response()->json(['status' => 'invalid signature'], 403);
     }
 
+    // ✅ Extract booking ID from order_id
+    $raw = str_replace('BOOK-', '', $request->order_id);
+    $bookingId = explode('-', $raw)[0];
 
-    public function success()
-    {
-        return view('home.payment-success');
+    \Log::info('BOOKING ID PARSED:', ['bookingId' => $bookingId]);
+
+    $booking = Booking::find($bookingId);
+
+    if (!$booking) {
+        \Log::error('BOOKING NOT FOUND', ['bookingId' => $bookingId]);
+        return response()->json(['status' => 'booking not found'], 404);
     }
 
-    public function failed()
-    {
-        return view('home.payment-failed');
+    // ✅ Update status
+    switch ($request->transaction_status) {
+        case 'capture':
+        case 'settlement':
+            $booking->update(['status' => 'approved']);
+            break;
+
+        case 'pending':
+            $booking->update(['status' => 'pending']);
+            break;
+
+        case 'deny':
+        case 'cancel':
+        case 'expire':
+            $booking->update(['status' => 'cancelled']);
+            break;
     }
+
+    \Log::info('BOOKING STATUS UPDATED', [
+        'bookingId' => $bookingId,
+        'new_status' => $booking->status
+    ]);
+
+    return response()->json(['status' => 'success']);
+}
 }

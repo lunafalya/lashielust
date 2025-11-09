@@ -15,8 +15,9 @@
       <div class="about-text">
         <img src="{{ asset('images/aboutus1.png') }}" alt="aboutus1">
         <p>
-          Eleifend arcu non lorem justo in tempus purus gravida. Est tortor egestas sed feugiat elementum.
-          Vivamus nulla amet a ultrices massa dui. Tortor est purus morbi vitae arcu suspendisse amet.
+          At Lashie Lust, we believe every pair of eyes tells a beautiful story.
+          Our mission is to help you express confidence and charm through lashes that look natural and feel comfortable.
+          With skilled lash artists and high-quality materials, we bring elegance to every blink — so you can shine effortlessly every day.
         </p>
       </div>
 

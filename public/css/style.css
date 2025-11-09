@@ -438,7 +438,11 @@ footer {
 }
 
 .footer-contact p {
-  margin: 4px 0;
+color:  #fff8e7;
+}
+
+.footer-contact p:hover {
+color: #E6C068;
 }
 
 .footer-socials {
